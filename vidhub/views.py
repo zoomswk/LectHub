@@ -28,7 +28,7 @@ def upload(request):
 
         uploadedFile = request.FILES['file']
         fileName = "storage/"+uploadedFile.name
-        Video.objects.create(title=request.POST['title'], author=request.POST['author'], video_url=uploadedFile.name, rev_id=0, subtitle_url='')
+        
         # Write File mp4
         with open(fileName, "wb") as f:
             for chunk in uploadedFile.chunks():
@@ -47,6 +47,8 @@ def upload(request):
         # Submit from local file
         file_job = client.submit_job_local_file(filename=mp3fileNameNoFolder,callback_url=callback_url ,metadata="This_is_some_job_metadata", skip_diarization=False)
         
+        Video.objects.create(title=request.POST['title'], author=request.POST['author'], video_url=uploadedFile.name, rev_id=file_job.id, subtitle_url='')
+        
         return HttpResponse("Uploaded")
     else:
         return HttpResponse("WTF")
@@ -64,8 +66,11 @@ def revai_callback(request):
         caption= client.get_captions(job.id)
         with open(fileName, "wb") as f:
             f.write(caption)
+        
+        video.save()
     else:
         video.subtitle_url = 'failed'
+        video.save()
     return HttpResponse("Callback received.")
 
 def vid(request, uid):
