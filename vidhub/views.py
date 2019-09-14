@@ -58,16 +58,18 @@ def upload(request):
 @csrf_exempt
 def revai_callback(request):
     json_result=(request.body).decode("utf-8")
-    job=json.loads(json_result)
+    print(json_result)
+    job=json.loads(json_result)['job']
+    print(job)
     video = Video.objects.get(rev_id=job['id'])
     if job['status'] == 'transcribed':
         video.subtitle_url = 'ready'
 
         # Create client with your access token
         client = apiclient.RevAiAPIClient(settings.REV_ACCESS_TOKEN)
-        fileName="storage/"+job.name[:-4]+".vtt"
-        caption= client.get_captions(job.id)
-        with open(fileName, "wb") as f:
+        fileName="storage/"+job['name'][:-4]+".vtt"
+        caption= client.get_captions(job['id'])
+        with open(fileName, "w") as f:
             f.write(caption)
 
         video.save()
