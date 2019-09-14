@@ -4,7 +4,6 @@ var vtt = "WEBVTT\n\n1\n00:00.000 --> 00:20.000\n[Music]\n\n1\n00:20.500 --> 00:
     regions = [];
 parser.oncue = function(cue) {
     cues.push(cue);
-    console.log(cue);
 };
 parser.onregion = function(region) {
     regions.push(region);
@@ -12,22 +11,28 @@ parser.onregion = function(region) {
 parser.parse(vtt);
 parser.flush();
 
-function update_subtitle(s) {
+var editing = 0;
+var cur;
+
+function update_subtitle(s, render) {
     var element_list = s.trim().split(' ');
     $('#subtitle').empty();
     for (var [i, v] of element_list.entries()) {
-        var tag = `<span contenteditable id="tag-${i}" onclick="pause();" class="subtitle-element">${v}</span>`;
+        var tag = `<span contenteditable id="tag-${i}" onclick="edit();" class="subtitle-element">${v}</span>`;
         $('#subtitle').append(tag);
         $(`#subtitle > tag-${i}`).change(() => {
           console.log("Get value " + $(this).value);
         });
     }
-
-    MathJax.typeset()
+    if (render)
+        MathJax.typeset()
 }
 
-function pause() {
+function edit() {
     $('#vid')[0].pause();
+    if (editing == 0)
+        update_subtitle(cues[cur].text, 0);
+    editing = 1;
     //add a submit changes! button here
 }
 
@@ -48,17 +53,21 @@ function binSearch(cues, curtime) {
     }
 }
 
-function what_time(){
+function display(render){
     var curtime = $('#vid')[0].currentTime;
     var cnt = binSearch(cues, curtime);
     if (cnt < cues.length) {
         if (curtime >= cues[cnt].startTime)
-            update_subtitle(cues[cnt].text);
+            if (cur != cnt || editing == 1) {
+                editing = 0;
+                update_subtitle(cues[cnt].text, render);
+                cur = cnt;
+            }
         if (curtime >= cues[cnt].endTime)
             $('#subtitle').empty();
     }
 }
 
 $(function() {
-    $('#vid').on('timeupdate', function() {what_time()});
+    $('#vid').on('timeupdate', function() {display(1)});
 });
