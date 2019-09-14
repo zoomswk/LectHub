@@ -19,11 +19,17 @@ class UploadFileForm(forms.Form):
     
 
 def upload(request):
+    
+    form = UploadFileForm(request.POST,request.FILES)
     if request.method=='GET': ## For default view
-        return render(request, 'vidhub/test.html')
+        return render(request, 'vidhub/test.html',{'form':form})
     elif request.method=='POST':
-        form = UploadFileForm(request.POST['title'],request.POST['author'],None)
-        
+        uploadedFile=request.FILES['file']
+        fileName= "storage/"+uploadedFile.name
+        with open(fileName, "wb") as f:
+            for chunk in uploadedFile.chunks():
+                f.write(chunk)
+            
         return HttpResponse("Hello, world. Upload POST")
     else:
         return HttpResponse("WTF")

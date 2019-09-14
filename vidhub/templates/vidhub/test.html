@@ -12,9 +12,10 @@
   </head>
 
   <body>
-    <form action="http://127.0.0.1:8000/vidhub/upload/" method="post"> {% csrf_token %}
+    <form action="http://127.0.0.1:8000/vidhub/upload/" method="post" enctype="multipart/form-data"> {% csrf_token %}
       title: <input type="text" name="title"><br>
       author <input type="text" name="author"><br>
+      File: <input type="file" name="file"><br>
       <input type="submit" value="Submit">
     </form>
   </body>
