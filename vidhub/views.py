@@ -8,6 +8,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .models import Video
 import moviepy.editor as mp
+
+from rev_ai import apiclient
+
 # Create your views here.
 def index(request):
     return HttpResponse("Hello, world.")
@@ -32,12 +35,18 @@ def upload(request):
                 f.write(chunk)
 
         # Convert to mp3
-        
+        mp3fileName=fileName[:-4]+".mp3"
         clip = mp.VideoFileClip(fileName).subclip(0)
-        clip.audio.write_audiofile(fileName[:-4]+".mp3")
-        #
+        mp3fileNameNoFolder = uploadedFile.name[:-4]+".mp3"
+        clip.audio.write_audiofile(mp3fileName)
+        # rev_ai  request
+                
+        # Create client with your access token
+        client = apiclient.RevAiAPIClient(settings.REV_ACCESS_TOKEN)
+        # Submit from local file
+        file_job = client.submit_job_local_file(filename=mp3fileNameNoFolder, metadata="This_is_some_job_metadata", skip_diarization=False)
         
-        return HttpResponse("Uploaded" + settings.REV_ACCESS_TOKEN)
+        return HttpResponse("Uploaded")
     else:
         return HttpResponse("WTF")
 
@@ -47,6 +56,13 @@ def revai_callback(request):
     video = Video.objects.get(rev_id=job['id'])
     if job['status'] == 'transcribed':
         video.subtitle_url = 'ready'
+        
+        # Create client with your access token
+        client = apiclient.RevAiAPIClient(settings.REV_ACCESS_TOKEN)
+        fileName=job.name
+        caption= client.get_captions(job.id)
+        with open(fileName, "wb") as f:
+            f.write(caption)
     else:
         video.subtitle_url = 'failed'
     return HttpResponse("Callback received.")
