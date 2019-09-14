@@ -22,7 +22,7 @@ def upload(request):
     
     form = UploadFileForm(request.POST,request.FILES)
     if request.method=='GET': ## For default view
-        return render(request, 'vidhub/test.html',{'form':form})
+        return render(request, 'vidhub/test.html')
     elif request.method=='POST':
         uploadedFile=request.FILES['file']
         fileName= "storage/"+uploadedFile.name
