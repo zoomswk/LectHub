@@ -59,7 +59,7 @@ def upload(request):
 def revai_callback(request):
     json_result=(request.body).decode("utf-8")
     print(json_result)
-    job=json.loads(json_result)
+    job=json.loads(json_result)['job']
     print(job)
     video = Video.objects.get(rev_id=job['id'])
     if job['status'] == 'transcribed':
