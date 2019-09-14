@@ -57,7 +57,7 @@ def upload(request):
 
 @csrf_exempt
 def revai_callback(request):
-    print(request.POST)
+    print(request.body)
     for key in request.POST:
         print(key, request.POST[key])
     print(json.dumps(request.POST['']))
