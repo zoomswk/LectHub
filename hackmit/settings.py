@@ -121,4 +121,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Access token to rev.ai
-REV_ACCESS_TOKEN = None
+REV_ACCESS_TOKEN = "02TIlSQ58z-MbVc4Ze1As6WRvoQ4-sMuGgLzAuHl8xPjepi-71-kGwHMeqDOmXNxfL-IdAYwySRueLUSYE6k63XhedrkM"
