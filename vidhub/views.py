@@ -69,7 +69,7 @@ def revai_callback(request):
         client = apiclient.RevAiAPIClient(settings.REV_ACCESS_TOKEN)
         fileName="storage/"+job['name'][:-4]+".vtt"
         caption= client.get_captions(job['id'])
-        with open(fileName, "wb") as f:
+        with open(fileName, "w") as f:
             f.write(caption)
 
         video.save()
