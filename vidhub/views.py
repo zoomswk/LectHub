@@ -22,12 +22,8 @@ def upload(request):
     if request.method=='GET': ## For default view
         return render(request, 'vidhub/test.html')
     elif request.method=='POST':
-        form = UploadFileForm(request.GET['title'],request.GET['author'], request.FILES)
-        if form.is_valid():
-            #handle_uploaded_file(request.FILES['file'])
-            return HttpResponse('OW M FG')
-        else:
-            return HttpResponse('Error parsing')
+        form = UploadFileForm(request.POST['title'],request.POST['author'],None)
+        
         return HttpResponse("Hello, world. Upload POST")
     else:
         return HttpResponse("WTF")
