@@ -7,3 +7,6 @@ def index(request):
 
 def upload(request):
     return HttpResponse("Hello, world. Upload")
+
+def vid(request):
+    return HttpResponse("Vid welcome.")
