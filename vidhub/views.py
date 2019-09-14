@@ -57,8 +57,8 @@ def upload(request):
 
 @csrf_exempt
 def revai_callback(request):
-    print(request)
-    print(json.dumps(request))
+    print(request.POST)
+    print(json.dumps(request.POST['']))
     job = request.POST['job']
     video = Video.objects.get(rev_id=job['id'])
     if job['status'] == 'transcribed':
