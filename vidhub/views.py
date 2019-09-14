@@ -57,11 +57,8 @@ def upload(request):
 
 @csrf_exempt
 def revai_callback(request):
-    print(request.body)
-    for key in request.POST:
-        print(key, request.POST[key])
-    print(json.dumps(request.POST['']))
-    job = request.POST['job']
+    json_result=(request.body).decode("utf-8")
+    job=json.loads(json_result)
     video = Video.objects.get(rev_id=job['id'])
     if job['status'] == 'transcribed':
         video.subtitle_url = 'ready'
