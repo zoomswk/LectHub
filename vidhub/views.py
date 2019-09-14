@@ -3,6 +3,8 @@ from django.template import loader
 from django.http import HttpResponse
 from django import forms
 
+from django.views.decorators.csrf import csrf_exempt
+
 from .models import Video
 
 
@@ -31,8 +33,15 @@ def upload(request):
     else:
         return HttpResponse("WTF")
 
-
-
+@csrf_exempt
+def revai_callback(request):
+    job = request.POST['job']
+    video = Video.objects.get(rev_id=job['id'])
+    if job['status'] == 'transcribed':
+        video.subtitle_url = 'ready'
+    else:
+        video.subtitle_url = 'failed'
+    return HttpResponse("Callback received.")
 
 def vid(request, uid):
     context = {'uid': uid}
