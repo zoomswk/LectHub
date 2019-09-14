@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.template import loader
 from django.http import HttpResponse
 from django import forms
 # Create your views here.
@@ -34,8 +35,6 @@ def upload(request):
 
 
 
-'''
-Vid View section
-'''
-def vid(request):
-    return HttpResponse("Vid welcome.")
+def vid(request, uid):
+    context = {'uid': uid}
+    return render(request, 'vidhub/player.html', context)
