@@ -58,6 +58,8 @@ def upload(request):
 @csrf_exempt
 def revai_callback(request):
     print(request.POST)
+    for key in request.POST:
+        print(key, request.POST[key])
     print(json.dumps(request.POST['']))
     job = request.POST['job']
     video = Video.objects.get(rev_id=job['id'])
