@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
@@ -55,6 +57,8 @@ def upload(request):
 
 @csrf_exempt
 def revai_callback(request):
+    print(request)
+    print(json.dumps(request))
     job = request.POST['job']
     video = Video.objects.get(rev_id=job['id'])
     if job['status'] == 'transcribed':
