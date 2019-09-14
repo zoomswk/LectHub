@@ -9,3 +9,5 @@ class Video(models.Model):
     video_url = models.CharField(max_length=100)
     rev_id = models.CharField(max_length=30)
     subtitle_url = models.CharField(max_length=100)
+    def __str__(self):
+        return str(self.uid)

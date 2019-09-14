@@ -11,4 +11,4 @@ def upload(request):
 
 def vid(request, uid):
     context = {'uid': uid}
-    return render(request, 'vidhub/player.html', context)
+    return render(request, 'player.html', context)
