@@ -45,7 +45,7 @@ def upload(request):
         client = apiclient.RevAiAPIClient(settings.REV_ACCESS_TOKEN)
         callback_url="http://35.239.24.77/vidhub/apis/revai/"
         # Submit from local file
-        file_job = client.submit_job_local_file(filename=mp3fileNameNoFolder,callback_url=callback_url ,metadata="This_is_some_job_metadata", skip_diarization=False)
+        file_job = client.submit_job_local_file(filename=mp3fileName,callback_url=callback_url ,metadata="This_is_some_job_metadata", skip_diarization=False)
         
         Video.objects.create(title=request.POST['title'], author=request.POST['author'], video_url=uploadedFile.name, rev_id=file_job.id, subtitle_url='')
         
