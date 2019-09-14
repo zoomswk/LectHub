@@ -2,6 +2,10 @@ from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
 from django import forms
+
+from .models import Video
+
+
 # Create your views here.
 def index(request):
     return HttpResponse("Hello, world.")
@@ -10,27 +14,20 @@ def index(request):
 '''
 Upload section
 '''
-from django import forms
-
-class UploadFileForm(forms.Form):
-    title = forms.CharField(max_length=50)
-    author = forms.CharField(max_length=50)
-    file = forms.FileField()
-    
-
 def upload(request):
     
-    form = UploadFileForm(request.POST,request.FILES)
-    if request.method=='GET': ## For default view
-        return render(request, 'test.html')
-    elif request.method=='POST':
-        uploadedFile=request.FILES['file']
-        fileName= "storage/"+uploadedFile.name
+    if request.method == 'GET': ## For default view
+        return render(request, 'upload.html')
+    elif request.method == 'POST':
+
+        uploadedFile = request.FILES['file']
+        fileName = "storage/"+uploadedFile.name
+        Video.objects.create(title=request.POST['title'], author=request.POST['author'], video_url=uploadedFile.name, rev_id=0, subtitle_url='')
+
         with open(fileName, "wb") as f:
             for chunk in uploadedFile.chunks():
                 f.write(chunk)
-            
-        return HttpResponse("Hello, world. Upload POST")
+        return HttpResponse("Uploaded")
     else:
         return HttpResponse("WTF")
 
