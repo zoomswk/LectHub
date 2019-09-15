@@ -32,7 +32,7 @@ function update_subtitle(s, render) {
             }
           }
         })()).click( (function() {
-          is_latex = /^\$\$.*\$\$$/.test(v);
+          is_latex = /^.*\$.*\$.*$/.test(v);
           return function () {
             edit(i, is_latex);
           }
