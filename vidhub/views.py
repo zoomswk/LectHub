@@ -77,15 +77,16 @@ def revai_callback(request):
         content_list=caption.splitlines()
         print(content_list)
         client = translate.Client( target_language="th") ## client  to Google
-        for i in range(2,len(content_list),4):
+        for i in range(4,len(content_list),4):
             print("Send:" , content_list[i])
-            returnDict= client.translate(content_list[i])
+            returnDict= client.translate( content_list[i])
             print("Return:",returnDict)
             returnString=returnDict['translatedText']
             content_list[i]=returnString
-        thaifileName="static/videos/"+job['name'][:-4]+"vtt.th"
+        thaifileName="static/videos/"+job['name'][:-4]+".vtt.th"
         with open(thaifileName,"w")  as f:
-            f.writelines(content_list)
+            for line in content_list:
+                f.write(line+"\n")
         
 
         video.subtitle_url = 'http://35.239.24.77/' + fileName
