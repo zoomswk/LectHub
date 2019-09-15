@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Video
 import moviepy.editor as mp
 
-from rev_ai import apiclient
+from rev_ai import apiclient, CaptionType
 
 # Create your views here.
 def index(request):
@@ -51,9 +51,9 @@ def upload(request):
         
         video_url = "http://35.239.24.77/static/videos/" + uploadedFile.name
 
-        Video.objects.create(title=request.POST['title'], author=request.POST['author'], video_url=video_url, rev_id=file_job.id, subtitle_url='')
+        video = Video.objects.create(title=request.POST['title'], author=request.POST['author'], video_url=video_url, rev_id=file_job.id, subtitle_url='')
 
-        return HttpResponse("Uploaded")
+        return render(request, 'uploaded.html',{'id':video.id})
     else:
         return HttpResponse("WTF")
 
@@ -69,7 +69,7 @@ def revai_callback(request):
         # Create client with your access token
         client = apiclient.RevAiAPIClient(settings.REV_ACCESS_TOKEN)
         fileName="static/videos/"+job['name'][:-4]+".vtt"
-        caption= client.get_captions(job['id'])
+        caption= client.get_captions(job['id'], CaptionType.VTT)
         with open(fileName, "w") as f:
             f.write(caption)
 
