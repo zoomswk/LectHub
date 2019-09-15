@@ -105,6 +105,7 @@ def update(request, id):
     print("new content:\n"+content)
     with open(fileName,"w") as f:
         f.write(content)
+    return HttpResponse("Update Success!")
 
 def vid(request, id):
     video = Video.objects.get(id=id)
