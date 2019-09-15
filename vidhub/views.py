@@ -12,7 +12,7 @@ from .models import Video
 import moviepy.editor as mp
 
 from rev_ai import apiclient, CaptionType
-from google.cloud import translate
+#from google.cloud import translate
 
 # Create your views here.
 def index(request):
@@ -122,10 +122,13 @@ def update(request, id):
         f.write(content)
     return HttpResponse("Update Success!")
 
-def vid(request, id):
+def vid(request, id, ap=""):
     video = Video.objects.get(id=id)
-    context = {'id': id, 'video_title': video.title, 'video_author': video.author, 'video_url': video.video_url, 'subtitle_url': video.subtitle_url}
+    context = {'id': id, 'video_title': video.title, 'video_author': video.author, 'video_url': video.video_url, 'subtitle_url': video.subtitle_url+ap}
     return render(request, 'main.html', context)
+
+def vid_th(request, id):
+    return vid(request, id, ap=".th")
 
 def browse(request):
     return render(request, 'browse.html')
