@@ -1,16 +1,7 @@
-var vtt = "WEBVTT\n\n1\n00:00.000 --> 00:20.000\n[Music]\n\n1\n00:20.500 --> 00:40.000\ndu du du du DUH DUH! $O(n\\log{n})$",
-    parser = new WebVTT.Parser(window, WebVTT.StringDecoder()),
-    cues = [],
-    regions = [];
-parser.oncue = function(cue) {
-    cues.push(cue);
-};
-parser.onregion = function(region) {
-    regions.push(region);
-}
-parser.parse(vtt);
-parser.flush();
-
+var vtt,
+parser,
+cues = [],
+regions = [];
 var editing = 0;
 var cur;
 
@@ -35,7 +26,6 @@ function update_subtitle(s, render) {
 
               // send a new request
 
-
               display(1, true);
 
             }
@@ -54,7 +44,7 @@ function edit(index) {
     //add a submit changes! button here
 }
 
-function binSearch(cues, curtime) {
+function binSearch(curtime) {
     var min = 0, mid, max = cues.length - 1;
     while (max != min) {
         if (max - min == 1) {
@@ -63,7 +53,7 @@ function binSearch(cues, curtime) {
             else
                 return min;
         }
-        mid = (min + max)/2;
+        mid = Math.round((min + max)/2);
         if (curtime >= cues[mid].startTime)
             min = mid;
         else
@@ -73,7 +63,7 @@ function binSearch(cues, curtime) {
 
 function display(render, force = false){
     var curtime = $('#vid')[0].currentTime;
-    var cnt = binSearch(cues, curtime);
+    var cnt = binSearch(curtime);
     if (cnt < cues.length) {
         if (curtime >= cues[cnt].startTime)
             if (cur != cnt || force) {
@@ -92,5 +82,14 @@ $(function() {
 
     $.get( url, function( data ) {
       vtt = data;
+      parser = new WebVTT.Parser(window, WebVTT.StringDecoder());
+      parser.oncue = function(cue) {
+          cues.push(cue);
+      };
+      parser.onregion = function(region) {
+          regions.push(region);
+      }
+      parser.parse(vtt);
+      parser.flush();
     });
 });
