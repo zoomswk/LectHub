@@ -18,21 +18,39 @@ function update_subtitle(s, render) {
     var element_list = s.trim().split(' ');
     $('#subtitle').empty();
     for (var [i, v] of element_list.entries()) {
-        var tag = `<span contenteditable id="tag-${i}" onclick="edit();" class="subtitle-element">${v}</span>`;
+        var tag = `<span contenteditable id="tag-${i}" " class="subtitle-element">${v}</span>`;
         $('#subtitle').append(tag);
-        $(`#subtitle > tag-${i}`).change(() => {
-          console.log("Get value " + $(this).value);
-        });
+
+        $(`#subtitle > #tag-${i}`).bind("blur", (function() {
+          const cur_i = i;
+          return function() {
+            const new_text = $(this).html();
+
+            if (new_text !== v){
+              // edit locally
+              element_list[cur_i] = new_text;
+              s = element_list.join(" ");
+              // HEREEEE
+              console.log("s = " + s);
+
+              // send a new request
+
+
+              display(1, true);
+
+            }
+          }
+        })()).click(() => { edit(i) });
     }
     if (render)
         MathJax.typeset()
 }
 
-function edit() {
+function edit(index) {
     $('#vid')[0].pause();
-    if (editing == 0)
-        update_subtitle(cues[cur].text, 0);
-    editing = 1;
+    if (editing == 0) {
+        //update_subtitle(cues[cur].text, 0);
+    }
     //add a submit changes! button here
 }
 
@@ -53,13 +71,12 @@ function binSearch(cues, curtime) {
     }
 }
 
-function display(render){
+function display(render, force = false){
     var curtime = $('#vid')[0].currentTime;
     var cnt = binSearch(cues, curtime);
     if (cnt < cues.length) {
         if (curtime >= cues[cnt].startTime)
-            if (cur != cnt || editing == 1) {
-                editing = 0;
+            if (cur != cnt || force) {
                 update_subtitle(cues[cnt].text, render);
                 cur = cnt;
             }
@@ -70,4 +87,10 @@ function display(render){
 
 $(function() {
     $('#vid').on('timeupdate', function() {display(1)});
+
+    const url = $('#subtitle_url').html();
+
+    $.get( url, function( data ) {
+      vtt = data;
+    });
 });

@@ -26,10 +26,15 @@
           .subtitle-element:hover {
             background-color: #D0D0D0;
           }
+
+          .subtitle-element:focus {
+            background-color: #FFA500;
+          }
         </style>
 
     </head>
     <body>
+        <div id="subtitle_url" hidden>{{ subtitle_url }}</div>
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <img class="navbar-brand" src="{% static "logo.png" %}" width="120px"></img>
