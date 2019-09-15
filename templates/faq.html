@@ -1,0 +1,63 @@
+{% load static %}
+<!doctype html>
+<html lang=en>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <div class="jumbotron jumbotron-fluid">
+                <center><img src="{% static "logo.png" %}"></img></center>
+                <h1 class="m-2 display-4">Lecthub: The Crowdsourced Video Platform</h1>
+                <hr class="my-4">
+                <h2 class="m-2 display-5">Key Features</h2>
+                <p class="m-2 lead"><b>Crowdsourced 1-click video caption editing</b></p>
+                <p class="m-2 lead">No where else could offer as accurate video caption on a giant library of lecture videos, when we all work together on a platform where contributing is actually easier than peeling peas!</p>
+                <p class="m-2 lead"><b>Powerful automatic caption generation with rev.ai</b></p>
+                <p class="m-2 lead">What’s more? With the help of the Google Cloud API, the video caption will be available in multiple languages!</p>
+                <p class="m-2 lead"><b>Supports LaTeXed captions</b></p>
+                <p class="m-2 lead">What equation did the professor just say? Fear no more on our platform when you can just read the equation on the screen.</p>
+                <hr class="my-4">
+                <h2 class="m-2 display-5">Our To-dos</h2>
+                <p class="m-2 lead">Video comment/Q&A thread (just like Reddit!)</p>
+                <p class="m-2 lead">Time stamp Comment/Reply section (just like SoundCloud!)</p>
+                <p class="m-2 lead">User system (Right now we allow all public internet users to access subtitle editing)</p>
+                <p class="m-2 lead">High contrast mode for students with sight problems</p>
+                <hr class="my-4">
+                <h2 class="m-2 display-5">How Tos</h2>
+                <p class="m-2 lead"><b>Watch a Lecture</b></p>
+                <p class="m-2 lead">Head to the browse page, select a lecture you like and enjoy!</p>
+                <p class="m-2 lead"><b>Upload a Lecture</b></p>
+                <p class="m-2 lead">Head to the browse page, select "Upload", and fill in the form!</p>
+                <hr class="my-4">
+                <h2 class="m-2 display-5">FAQ</h2>
+                <p class="m-2 lead"><b>What format of video files do you support?</b></p>
+                <p class="m-2 lead">We support MP4 and MOV files.</p>
+                <p class="m-2 lead"><b>Can we override the generated captions?</b></p>
+                <p class="m-2 lead">Yes, you can! Click once and then just edit!</p>
+                <p class="m-2 lead"><b>What about OCW or edX?</b></p>
+                <p class="m-2 lead">OCW is not an open platform - the content is regulated by the university. We are very open and would welcome your lectures! edX does not let you interact by editing subtitles and asking questions.</p>
+                <p class="m-2 lead"><b>What about Wikipedia?</b></p>
+                <p class="m-2 lead">Wikipedia is text-based, while we are video based and more interactive!</p>
+                <p class="m-2 lead"><b>What about Quora?</b></p>
+                <p class="m-2 lead">Quora is only question and answer, but we provide lecture videos from top-notch professors in top universities!</p>
+                <p class="m-2 lead"><b>What about Youtube?</b></p>
+                <p class="m-2 lead">Youtube doesn’t let you change subtitles on-the-fly. Plus, we support LaTeX!</p>
+                <p class="m-2 lead"><b>What about Reddit?</b></p>
+                <p class="m-2 lead">We plan to have comment threads in each video, just like Reddit! But we are educational, not general - so you can we sucked into a black hole of education!</p>
+                <hr class="my-4">
+                <p class="m-2 lead">Want to help us out? Upload a lecture video!</p>
+                <a class="btn btn-primary m-2" href="/vidhub/upload">Upload<a/a>
+                <hr class="my-4">
+                <p class="m-2 lead">Browse the videos we have!</p>
+                <a class="btn btn-primary m-2" href="/vidhub/browse">Browse</a>
+            </div>
+
+        </div>
+        <!-- end -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>
