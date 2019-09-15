@@ -26,7 +26,7 @@ function update_subtitle(s, render) {
               console.log("s = " + s);
 
               // send a new request
-              $.post("", {block_id: cur_id, new_dialog: s});
+              $.post("/update/", {block_id: cur_id, new_dialog: s});
 
               display(1, true);
 
