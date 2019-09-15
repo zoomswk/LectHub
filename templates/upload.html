@@ -1,9 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title></title>
 
@@ -12,13 +15,46 @@
   </head>
 
   <body>
-    This is in Test.html <br>
-    <form action="" method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      Title: <input type="text" name="title"><br>
-      Author: <input type="text" name="author"><br>
-      File: <input type="file" name="file"><br>
-      <input type="submit" value="Submit">
-    </form>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <img class="navbar-brand" src="{% static "logo.png" %}" width="120px"></img>
+            <a class="navbar-brand" href="/vidhub/browse">(CrowdLec)</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Video Upload</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="jumbotron jumbotron-fluid">
+            <h1 class="display-4 m-2">Upload a lecture video!</h1>
+            <p class="lead m-2">Thank you so much for contributing to the community! Because of you, more people get access to awesome educational content! Once the video is uploaded, our systems will automatically generate subtitles. Don't worry about the mistakes - you and your friends can always correct them! That's what LectHub is!</p>
+            <hr class="my-4">
+            <form class="m-2" action="" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              Title: <input type="text" name="title"><br>
+              Author: <input type="text" name="author"><br>
+              File: <input type="file" name="file"><br>
+              <input type="submit" value="Submit">
+                <div class="form-group">
+                  <label for="title">Title</label>
+                  <input type="text" class="form-control" name="title" placeholder="Enter Video Title">
+                </div>
+                <div class="form-group">
+                  <label for="author">Author</label>
+                  <input type="text" class="form-control" name="author" placeholder="You!">
+                </div>
+                <div class="form-group">
+                  <label for="file">Upload File</label>
+                  <input type="file" class="form-control" name="file">
+                </div>
+                <input type="submit" value="Submit" class="btn btn-primary"></button>
+            </form>
+        </div>
+    </div>
   </body>
 </html>
