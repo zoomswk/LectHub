@@ -132,3 +132,7 @@ def vid_th(request, id):
 
 def browse(request):
     return render(request, 'browse2.html')
+
+
+def faq(request):
+    return render(request, 'faq.html')
