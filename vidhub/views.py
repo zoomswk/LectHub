@@ -95,14 +95,14 @@ def update(request, id):
     content=""
     with open(fileName,"r") as f:
         content=f.read()
-    print(content)
+    #print(content)
     content_list=content.splitlines()
     block_id=request.POST['block_id']
     for i in range(len(content_list)):
         if(content_list[i]==str(block_id)):
             content_list[i+2]=request.POST['new_dialog']
     content="\n".join(content_list)
-    print("new content:\n"+content)
+    #print("new content:\n"+content)
     with open(fileName,"w") as f:
         f.write(content)
     return HttpResponse("Update Success!")
