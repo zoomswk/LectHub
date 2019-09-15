@@ -87,7 +87,7 @@ def update(request, id):
         print("Not POST")
         return
     
-    video = Video.objects.get(rev_id=id)
+    video = Video.objects.get(id=id)
     if(video.subtitle_url=="failed"):
         print("Failed URL")
         return
