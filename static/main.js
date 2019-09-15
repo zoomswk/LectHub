@@ -1,5 +1,5 @@
 var vtt,
-parser = new WebVTT.Parser(window, WebVTT.StringDecoder()),
+parser,
 cues = [],
 regions = [];
 var editing = 0;
@@ -26,7 +26,6 @@ function update_subtitle(s, render) {
 
               // send a new request
 
-
               display(1, true);
 
             }
@@ -45,7 +44,7 @@ function edit(index) {
     //add a submit changes! button here
 }
 
-function binSearch(cues, curtime) {
+function binSearch(curtime) {
     var min = 0, mid, max = cues.length - 1;
     while (max != min) {
         if (max - min == 1) {
@@ -64,7 +63,7 @@ function binSearch(cues, curtime) {
 
 function display(render, force = false){
     var curtime = $('#vid')[0].currentTime;
-    var cnt = binSearch(cues, curtime);
+    var cnt = binSearch(curtime);
     if (cnt < cues.length) {
         if (curtime >= cues[cnt].startTime)
             if (cur != cnt || force) {
@@ -83,7 +82,7 @@ $(function() {
 
     $.get( url, function( data ) {
       vtt = data;
-
+      parser = new WebVTT.Parser(window, WebVTT.StringDecoder());
       parser.oncue = function(cue) {
           cues.push(cue);
       };
