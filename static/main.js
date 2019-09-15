@@ -1,5 +1,7 @@
-var vtt;
-
+var vtt,
+parser = new WebVTT.Parser(window, WebVTT.StringDecoder()),
+cues = [],
+regions = [];
 var editing = 0;
 var cur;
 
@@ -80,10 +82,6 @@ $(function() {
     const url = $('#subtitle_url').html();
 
     $.get( url, function( data ) {
-      parser = new WebVTT.Parser(window, WebVTT.StringDecoder()),
-      cues = [],
-      regions = [];
-
       vtt = data;
 
       parser.oncue = function(cue) {
