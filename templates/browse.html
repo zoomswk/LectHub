@@ -7,13 +7,24 @@
     </head>
     <body>
         <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <img class="navbar-brand" src="{% static "logo.png" %}" width="120px"></img>
+                <a class="navbar-brand" href="/vidhub/landing">(CrowdLec)</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Browse</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
             <div class="jumbotron jumbotron-fluid">
-                <h1 class="m-2 display-4">Welcome to<img src="{% static "logo.png" %}"></img>(CrowdLec)!</h1>
-                <p class="m-2 lead">Our team is striving to make learning accessible for all.
-                    And for all, this includes students speaking other languages,
-                    students that are hard of hearing, etc. We are a crowd-sourced platform,
-                    where students can help edit subtitles of lectures, put in comments,
-                    questions, answers and notes.</p>
+                <h1 class="m-2 display-4">Browse Our Videos</h1>
+                <p class="m-2 lead">Below you can find the list of subjects and videos we have right now!</p>
+                <hr class="my-4">
                 <p class="m-2 lead">Want to help us out? Upload a lecture video!</p>
                 <a class="btn btn-primary m-2" href="/vidhub/upload">Upload</a>
                 <hr class="my-4">
