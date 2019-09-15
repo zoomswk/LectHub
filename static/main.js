@@ -1,15 +1,4 @@
-var vtt = "WEBVTT\n\n1\n00:00.000 --> 00:20.000\n[Music]\n\n1\n00:20.500 --> 00:40.000\ndu du du du DUH DUH! $O(n\\log{n})$",
-    parser = new WebVTT.Parser(window, WebVTT.StringDecoder()),
-    cues = [],
-    regions = [];
-parser.oncue = function(cue) {
-    cues.push(cue);
-};
-parser.onregion = function(region) {
-    regions.push(region);
-}
-parser.parse(vtt);
-parser.flush();
+var vtt;
 
 var editing = 0;
 var cur;
@@ -91,6 +80,19 @@ $(function() {
     const url = $('#subtitle_url').html();
 
     $.get( url, function( data ) {
+      parser = new WebVTT.Parser(window, WebVTT.StringDecoder()),
+      cues = [],
+      regions = [];
+
       vtt = data;
+
+      parser.oncue = function(cue) {
+          cues.push(cue);
+      };
+      parser.onregion = function(region) {
+          regions.push(region);
+      }
+      parser.parse(vtt);
+      parser.flush();
     });
 });
