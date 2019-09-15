@@ -83,7 +83,7 @@ def revai_callback(request):
 
 def vid(request, id):
     video = Video.objects.get(id=id)
-    context = {'id': id, 'video_title': video.title, 'video_url': video.video_url, 'subtitle_url': video.subtitle_url}
+    context = {'id': id, 'video_title': video.title, 'video_author': video.author, 'video_url': video.video_url, 'subtitle_url': video.subtitle_url}
     return render(request, 'main.html', context)
 
 def browse(request):
