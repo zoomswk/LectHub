@@ -29,7 +29,7 @@ def upload(request):
     elif request.method == 'POST':
 
         uploadedFile = request.FILES['file']
-        fileName = "storage/"+uploadedFile.name
+        fileName = "static/videos/"+uploadedFile.name
 
         # Write File mp4
         with open(fileName, "wb") as f:
@@ -49,6 +49,8 @@ def upload(request):
         # Submit from local file
         file_job = client.submit_job_local_file(filename=mp3fileName,callback_url=callback_url ,metadata="This_is_some_job_metadata", skip_diarization=False)
         
+        video_url = "http://35.239.24.77/static/videos/" + uploadedFile.name
+
         Video.objects.create(title=request.POST['title'], author=request.POST['author'], video_url=uploadedFile.name, rev_id=file_job.id, subtitle_url='')
 
         return HttpResponse("Uploaded")
@@ -67,7 +69,7 @@ def revai_callback(request):
 
         # Create client with your access token
         client = apiclient.RevAiAPIClient(settings.REV_ACCESS_TOKEN)
-        fileName="storage/"+job['name'][:-4]+".vtt"
+        fileName="static/videos/"+job['name'][:-4]+".vtt"
         caption= client.get_captions(job['id'])
         with open(fileName, "w") as f:
             f.write(caption)
@@ -78,8 +80,9 @@ def revai_callback(request):
         video.save()
     return HttpResponse("Callback received.")
 
-def vid(request, uid):
-    context = {'uid': uid}
+def vid(request, id):
+    video = Video.objects.get(id=id)
+    context = {'id': id, 'video_title': video.title, 'video_url': video.video_url, 'subtitle_url': video.subtitle_url}
     return render(request, 'main.html', context)
 
 def browse(request):
