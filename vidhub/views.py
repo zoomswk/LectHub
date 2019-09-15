@@ -53,7 +53,7 @@ def upload(request):
 
         Video.objects.create(title=request.POST['title'], author=request.POST['author'], video_url=video_url, rev_id=file_job.id, subtitle_url='')
 
-        return HttpResponse("Uploaded")
+        return render(request, 'uploaded.html',{'id':file_job.id})
     else:
         return HttpResponse("WTF")
 
