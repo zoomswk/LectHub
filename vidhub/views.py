@@ -51,7 +51,7 @@ def upload(request):
         
         video_url = "http://35.239.24.77/static/videos/" + uploadedFile.name
 
-        Video.objects.create(title=request.POST['title'], author=request.POST['author'], video_url=uploadedFile.name, rev_id=file_job.id, subtitle_url='')
+        Video.objects.create(title=request.POST['title'], author=request.POST['author'], video_url=video_url, rev_id=file_job.id, subtitle_url='')
 
         return HttpResponse("Uploaded")
     else:
@@ -65,7 +65,6 @@ def revai_callback(request):
     print(job)
     video = Video.objects.get(rev_id=job['id'])
     if job['status'] == 'transcribed':
-        video.subtitle_url = 'ready'
 
         # Create client with your access token
         client = apiclient.RevAiAPIClient(settings.REV_ACCESS_TOKEN)
@@ -73,6 +72,8 @@ def revai_callback(request):
         caption= client.get_captions(job['id'])
         with open(fileName, "w") as f:
             f.write(caption)
+
+        video.subtitle_url = fileName
 
         video.save()
     else:
