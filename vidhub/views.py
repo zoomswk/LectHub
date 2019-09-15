@@ -51,9 +51,9 @@ def upload(request):
         
         video_url = "http://35.239.24.77/static/videos/" + uploadedFile.name
 
-        Video.objects.create(title=request.POST['title'], author=request.POST['author'], video_url=video_url, rev_id=file_job.id, subtitle_url='')
+        video = Video.objects.create(title=request.POST['title'], author=request.POST['author'], video_url=video_url, rev_id=file_job.id, subtitle_url='')
 
-        return render(request, 'uploaded.html',{'id':file_job.id})
+        return render(request, 'uploaded.html',{'id':video.id})
     else:
         return HttpResponse("WTF")
 
