@@ -18,7 +18,6 @@ def index(request):
     return HttpResponse("Hello, world.")
 
 
-
 '''
 Upload section
 '''
