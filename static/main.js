@@ -9,7 +9,7 @@ function update_subtitle(s, render) {
     var element_list = s.trim().split(' ');
     $('#subtitle').empty();
     for (var [i, v] of element_list.entries()) {
-        var tag = `<div contenteditable id="tag-${i}" class="subtitle-element flex">${v}</div>`;
+        var tag = `<div contenteditable id="tag-${i}" class="subtitle-element d-inline-flex">${v}</div>`;
         $('#subtitle').append(tag);
 
         $(`#subtitle > #tag-${i}`).bind("blur", (function() {
