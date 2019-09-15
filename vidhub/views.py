@@ -12,6 +12,7 @@ from .models import Video
 import moviepy.editor as mp
 
 from rev_ai import apiclient, CaptionType
+from google.cloud import translate
 
 # Create your views here.
 def index(request):
@@ -71,6 +72,21 @@ def revai_callback(request):
         caption= client.get_captions(job['id'], CaptionType.VTT)
         with open(fileName, "w") as f:
             f.write(caption)
+        # TRanslate caption
+        content_list=caption.splitlines()
+        print(content_list)
+        client = translate.Client( target_language="th") ## client  to Google
+        for i in range(4,len(content_list),4):
+            print("Send:" , content_list[i])
+            returnDict= client.translate( content_list[i])
+            print("Return:",returnDict)
+            returnString=returnDict['translatedText']
+            content_list[i]=returnString
+        thaifileName="static/videos/"+job['name'][:-4]+".vtt.th"
+        with open(thaifileName,"w")  as f:
+            for line in content_list:
+                f.write(line+"\n")
+        
 
         video.subtitle_url = 'http://35.239.24.77/' + fileName
 
