@@ -34,22 +34,9 @@
             <h1 class="display-4 m-2">Upload a lecture video!</h1>
             <p class="lead m-2">Thank you so much for contributing to the community! Because of you, more people get access to awesome educational content! Once the video is uploaded, our systems will automatically generate subtitles. Don't worry about the mistakes - you and your friends can always correct them! That's what LectHub is!</p>
             <hr class="my-4">
-            <form class="m-2" action="" method="post" enctype="multipart/form-data">
-              {% csrf_token %}
-                <div class="form-group">
-                  <label for="title">Title</label>
-                  <input type="text" class="form-control" name="title" placeholder="Enter Video Title">
-                </div>
-                <div class="form-group">
-                  <label for="author">Author</label>
-                  <input type="text" class="form-control" name="author" placeholder="You!">
-                </div>
-                <div class="form-group">
-                  <label for="file">Upload File</label>
-                  <input type="file" class="form-control" name="file">
-                </div>
-                <input type="submit" value="Submit" class="btn btn-primary"></input>
-            </form>
+            <p class="lead m-2">Video uploaded!</p>
+            <p class="lead m-2">Your video is available here:</p>
+            <a href="/vidhub/vid/7">/vidhub/vid/7</a>
         </div>
     </div>
   </body>
