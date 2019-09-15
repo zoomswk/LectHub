@@ -48,7 +48,7 @@ def upload(request):
         callback_url="http://35.239.24.77/vidhub/apis/revai/"
         # Submit from local file
         file_job = client.submit_job_local_file(filename=mp3fileName,callback_url=callback_url ,metadata="This_is_some_job_metadata", skip_diarization=False)
-        
+
         video_url = "http://35.239.24.77/static/videos/" + uploadedFile.name
 
         video = Video.objects.create(title=request.POST['title'], author=request.POST['author'], video_url=video_url, rev_id=file_job.id, subtitle_url='')
@@ -86,7 +86,7 @@ def update(request, id):
     if(request.method!="POST"):
         print("Not POST")
         return
-    
+
     video = Video.objects.get(id=id)
     if(video.subtitle_url=="failed"):
         print("Failed URL")
@@ -113,4 +113,4 @@ def vid(request, id):
     return render(request, 'main.html', context)
 
 def browse(request):
-    return render(request, 'browse.html')
+    return render(request, 'browse2.html')
