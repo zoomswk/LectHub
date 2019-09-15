@@ -3,7 +3,7 @@ parser,
 cues = [],
 regions = [];
 var editing = 0;
-var cur;
+var cur, cur_id;
 
 function update_subtitle(s, render) {
     var element_list = s.trim().split(' ');
@@ -11,6 +11,7 @@ function update_subtitle(s, render) {
     for (var [i, v] of element_list.entries()) {
         var tag = `<span contenteditable id="tag-${i}" " class="subtitle-element">${v}</span>`;
         $('#subtitle').append(tag);
+
 
         $(`#subtitle > #tag-${i}`).bind("blur", (function() {
           const cur_i = i;
@@ -21,27 +22,32 @@ function update_subtitle(s, render) {
               // edit locally
               element_list[cur_i] = new_text;
               s = element_list.join(" ");
-              // HEREEEE
+              cues[cur].text = s;
               console.log("s = " + s);
 
               // send a new request
+              $.post("", {block_id: cur_id, new_dialog: s});
 
               display(1, true);
 
             }
           }
-        })()).click(() => { edit(i) });
+        })()).click( (function() {
+          is_latex = /^\$\$.*\$\$$/.test(v);
+          return function () {
+            edit(i, is_latex);
+          }
+        })());
     }
     if (render)
         MathJax.typeset()
 }
 
-function edit(index) {
+function edit(index, is_latex) {
     $('#vid')[0].pause();
-    if (editing == 0) {
-        //update_subtitle(cues[cur].text, 0);
+    if (is_latex) {
+        display(false, true);
     }
-    //add a submit changes! button here
 }
 
 function binSearch(curtime) {
@@ -69,6 +75,7 @@ function display(render, force = false){
             if (cur != cnt || force) {
                 update_subtitle(cues[cnt].text, render);
                 cur = cnt;
+                cur_id = cues[cnt].id;
             }
         if (curtime >= cues[cnt].endTime)
             $('#subtitle').empty();
