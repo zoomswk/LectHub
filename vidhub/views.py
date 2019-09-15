@@ -12,7 +12,7 @@ from .models import Video
 import moviepy.editor as mp
 
 from rev_ai import apiclient, CaptionType
-#from google.cloud import translate
+from google.cloud import translate
 
 # Create your views here.
 def index(request):
