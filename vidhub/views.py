@@ -73,7 +73,7 @@ def revai_callback(request):
         with open(fileName, "w") as f:
             f.write(caption)
 
-        video.subtitle_url = fileName
+        video.subtitle_url = 'http://35.239.24.77/' + fileName
 
         video.save()
     else:
