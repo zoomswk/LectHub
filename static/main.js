@@ -53,7 +53,7 @@ function binSearch(curtime) {
             else
                 return min;
         }
-        mid = (min + max)/2;
+        mid = Math.round((min + max)/2);
         if (curtime >= cues[mid].startTime)
             min = mid;
         else
