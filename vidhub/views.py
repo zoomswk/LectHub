@@ -91,7 +91,7 @@ def update(request, id):
     if(video.subtitle_url=="failed"):
         print("Failed URL")
         return
-    fileName=video.subtitle_url
+    fileName=video.subtitle_url[20:]
     content=""
     with open(fileName,"r") as f:
         content=f.read()
