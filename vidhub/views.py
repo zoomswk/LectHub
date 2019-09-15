@@ -81,6 +81,31 @@ def revai_callback(request):
         video.save()
     return HttpResponse("Callback received.")
 
+@csrf_exempt
+def update(request, id):
+    if(request.method!="POST"):
+        print("Not POST")
+        return
+    
+    video = Video.objects.get(rev_id=id)
+    if(video.subtitle_url=="failed"):
+        print("Failed URL")
+        return
+    fileName=video.subtitle_url
+    content=""
+    with open(fileName,"r") as f:
+        content=f.read()
+    print(content)
+    content_list=content.splitlines()
+    block_id=request.POST['block_id']
+    for i in range(len(content_list)):
+        if(content_list[i]==str(block_id)):
+            content_list[i+2]=request.POST['new_dialog']
+    content="\n".join(content_list)
+    print("new content:\n"+content)
+    with open(fileName,"w") as f:
+        f.write(content)
+
 def vid(request, id):
     video = Video.objects.get(id=id)
     context = {'id': id, 'video_title': video.title, 'video_author': video.author, 'video_url': video.video_url, 'subtitle_url': video.subtitle_url}
